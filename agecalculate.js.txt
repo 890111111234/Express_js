@@ -1,0 +1,13 @@
+let express = require("express");
+let bodyparser = require("body-parser");
+let app = express();
+app.use(bodyparser.json());
+app.post("/", (request, respond) => {
+  let age = req.body.dateOfBirth;
+  let a = age.toString().split("/");
+  let now = new Date();
+  res.send((now.getFullYear() - parseInt(a[2])).toString());
+});
+													
+app.listen(3000);
+console.log("server started at port 3000");
