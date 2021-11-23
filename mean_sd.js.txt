@@ -1,0 +1,37 @@
+let express = require("express");
+let bodyparser = require("body-parser");
+let app = express();
+app.use(bodyparser.json());
+app.post("/", (request, respond) => 
+{
+  let ISA1 = request.body.ISA1;
+  let ISA2 = request.body.ISA2;
+  let Assignment = request.body.Assignment;
+  let ESA = request.body.ESA;
+  let meanValue = mean(ISA1,ISA2,Assignment,ESA);
+  respond.send(
+    "Mean :" +
+      meanValue.toString() +
+      "\n" +
+      "Standard Devation:" +
+      standardDevation(ISA1,ISA2,Assignment,ESA, meanValue).toString()
+  );
+});
+mean = (ISA1, ISA2, Assignment, ESA) => {
+  let sum = ISA1 + ISA2 + Assignment + ESA;
+  return sum / 4;
+};
+standardDevation = (ISA1, ISA2, Assignment, ESA, mean) => {
+  ISA1 -= mean;
+  ISA2 -= mean;
+  Assignment -= mean;
+  ESA -= mean;
+  ISA1 *= ISA1;
+  ISA2 *= ISA2;
+  Assignment *= Assignment;
+  ESA *= ESA;
+  sum = (ISA1 + ISA2 + Assignment + ESA) / 4;
+  return Math.sqrt(sum);
+};
+app.listen(3000);
+console.log("server started at port 3000");
