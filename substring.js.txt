@@ -1,0 +1,16 @@
+let express = require("express");
+let bodyparser = require("body-parser");
+let app = express();
+app.use(bodyparser.json());
+app.post("/", (request, respond) => {
+  let main = request.body.main.toString();
+  let sub = request.body.sub;
+  if (main.includes(sub)) {
+    respond.send("yes both string are substring");
+  } else {
+    respond.send("no both string are not a substring");
+  }
+});
+
+app.listen(3000);
+console.log("server started at port 3000");
