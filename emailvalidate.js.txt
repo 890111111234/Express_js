@@ -1,0 +1,43 @@
+let express = require("express");
+let bodyparser = require("body-parser");
+let app = express();
+app.use(bodyparser.json());
+
+app.post("/", (request, respond) => {
+  let emailId = request.body.email;
+  if (isEmailValid(emailId)) {
+    respond.send("It is valid email-id");
+  } else {
+    respond.send("It is Invalid email id");
+  }
+});
+const eRegex =
+  /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+
+isValidEmailid = (Email) => 
+{
+  if (!email) return false;
+
+  if (Email.length > 254) return false;
+
+  let validEmailid = EmailRegex.test(Email);
+  if (!valid) return false;
+
+  // Further checking of some things regex can't handle
+  let parts = Email.split('@');
+  if (parts[0].length > 64) 
+  return false;
+
+  let domParts = parts[1].split(".");
+  if (
+    domParts.some(function (part) 
+{
+      return part.length > 63;
+    })
+  )
+    return false;
+
+  return true;
+};
+app.listen(3000);
+console.log("server started at port 3000");
